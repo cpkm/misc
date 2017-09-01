@@ -3,7 +3,7 @@ ant:
   <mkdir dir="D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor\for_redistribution" />
   <mkdir dir="D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor\for_testing" />
 </ant>
-mcc -C -o regen_monitor -W WinMain:regen_monitor -T link:exe -d 'D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor\for_testing' -v 'D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor.m' -a 'D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor.fig' 
+mcc -C -o regen_monitor -W WinMain:regen_monitor -T link:exe -d 'D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor\for_testing' -v 'D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor.m' -a 'D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_cal.txt' -a 'D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor.fig' 
 Compiler version: 5.1 (R2014a)
 Dependency analysis by REQUIREMENTS.
 [Warning: Duplicate directory name: C:\Program
@@ -48,8 +48,8 @@ Parsing file "C:\Program Files\MATLAB\R2014a\toolbox\compiler\deploy\deployprint
 Parsing file "C:\Program Files\MATLAB\R2014a\toolbox\compiler\deploy\printdlg.m"
 	(Referenced from: "Compiler Command Line").
 Deleting 2 temporary MEX authorization files.
-Removing: 'C:\Users\MILLER~1\AppData\Local\Temp\mathworks_tmp_264_4635_264.auth'.
-Removing: 'C:\Users\MILLER~1\AppData\Local\Temp\mathworks_tmp_264_24952_264.auth'.
+Removing: 'C:\Users\MILLER~1\AppData\Local\Temp\mathworks_tmp_3152_31784_3152.auth'.
+Removing: 'C:\Users\MILLER~1\AppData\Local\Temp\mathworks_tmp_3152_1147_3152.auth'.
 Generating file "D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor\for_testing\readme.txt".
 Packaging...
 Adding custom icon D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor_resources\icon.ico to D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor\for_testing\regen_monitor.exe.
@@ -57,5 +57,4 @@ Attempting to embed the CTF archive into the application D:\Miller Group Users\K
 Finished embedding CTF archive. Deleting the external CTF archive.
 Creating the bundle...
 Web based installer created at D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor\for_redistribution\regen_monitor_setup_web.exe.
-Self contained installer created at D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor\for_redistribution\regen_monitor_setup.exe.
 Packaging complete.

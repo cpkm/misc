@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="3997092033" file="D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor.prj" location="D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program" name="regen_monitor" preferred-package-location="D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="MATLAB Compiler for Standalone Applications">
+  <configuration build-checksum="2310931309" file="D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor.prj" location="D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program" name="regen_monitor" preferred-package-location="D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="MATLAB Compiler for Standalone Applications">
     <param.appname>regen_monitor</param.appname>
     <param.icon>${PROJECT_ROOT}\regen_monitor_resources\icon.ico</param.icon>
     <param.icons>
@@ -38,7 +38,7 @@
     <param.target.type>subtarget.standalone</param.target.type>
     <param.support.packages />
     <param.web.mcr>true</param.web.mcr>
-    <param.package.mcr>true</param.package.mcr>
+    <param.package.mcr>false</param.package.mcr>
     <param.no.mcr>false</param.no.mcr>
     <param.web.mcr.name>regen_monitor_setup_web</param.web.mcr.name>
     <param.package.mcr.name>regen_monitor_setup</param.package.mcr.name>
@@ -63,6 +63,7 @@
       <param.target.type />
       <param.support.packages />
       <param.web.mcr />
+      <param.package.mcr />
       <param.no.mcr />
       <param.no.mcr.name />
       <param.windows.command.prompt />
@@ -73,9 +74,12 @@
       <file>${PROJECT_ROOT}\regen_monitor.m</file>
     </fileset.main>
     <fileset.resources>
+      <file>${PROJECT_ROOT}\regen_cal.txt</file>
       <file>${PROJECT_ROOT}\regen_monitor.fig</file>
     </fileset.resources>
-    <fileset.package />
+    <fileset.package>
+      <file>${PROJECT_ROOT}\regen_cal.txt</file>
+    </fileset.package>
     <build-deliverables>
       <file location="${PROJECT_ROOT}\regen_monitor\for_testing" name="readme.txt" optional="true">D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor\for_testing\readme.txt</file>
       <file location="${PROJECT_ROOT}\regen_monitor\for_testing" name="regen_monitor.exe" optional="false">D:\Miller Group Users\Kyle\Code Projects\misc\Regen monitor\monitor_program\regen_monitor\for_testing\regen_monitor.exe</file>
