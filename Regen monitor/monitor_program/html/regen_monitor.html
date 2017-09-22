@@ -1,0 +1,1503 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>regen_monitor</title><meta name="generator" content="MATLAB 8.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-09-07"><meta name="DC.source" content="regen_monitor.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="keyword">function</span> varargout = regen_monitor(varargin)
+<span class="comment">% REGEN_MONITOR MATLAB code for regen_monitor.fig</span>
+<span class="comment">%      REGEN_MONITOR, by itself, creates a new REGEN_MONITOR or raises the existing</span>
+<span class="comment">%      singleton*.</span>
+<span class="comment">%</span>
+<span class="comment">%      H = REGEN_MONITOR returns the handle to a new REGEN_MONITOR or the handle to</span>
+<span class="comment">%      the existing singleton*.</span>
+<span class="comment">%</span>
+<span class="comment">%      REGEN_MONITOR('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+<span class="comment">%      function named CALLBACK in REGEN_MONITOR.M with the given input arguments.</span>
+<span class="comment">%</span>
+<span class="comment">%      REGEN_MONITOR('Property','Value',...) creates a new REGEN_MONITOR or raises the</span>
+<span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+<span class="comment">%      applied to the GUI before regen_monitor_OpeningFcn gets called.  An</span>
+<span class="comment">%      unrecognized property name or invalid value makes property application</span>
+<span class="comment">%      stop.  All inputs are passed to regen_monitor_OpeningFcn via varargin.</span>
+<span class="comment">%</span>
+<span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one</span>
+<span class="comment">%      instance to run (singleton)".</span>
+<span class="comment">%</span>
+<span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+
+<span class="comment">% Edit the above text to modify the response to help regen_monitor</span>
+
+<span class="comment">% Last Modified by GUIDE v2.5 31-Mar-2017 15:51:42</span>
+
+<span class="comment">% Begin initialization code - DO NOT EDIT</span>
+gui_Singleton = 1;
+gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+                   <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+                   <span class="string">'gui_OpeningFcn'</span>, @regen_monitor_OpeningFcn, <span class="keyword">...</span>
+                   <span class="string">'gui_OutputFcn'</span>,  @regen_monitor_OutputFcn, <span class="keyword">...</span>
+                   <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+                   <span class="string">'gui_Callback'</span>,   []);
+<span class="keyword">if</span> nargin &amp;&amp; ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+<span class="keyword">else</span>
+    gui_mainfcn(gui_State, varargin{:});
+<span class="keyword">end</span>
+<span class="comment">% End initialization code - DO NOT EDIT</span>
+
+
+<span class="comment">% --- User defined functions</span>
+
+<span class="comment">%Scan for daq device and set up channels. Set up daq</span>
+<span class="keyword">function</span> [e,msg] = scanDev(hObject, handles)
+<span class="comment">%should insert section to check for and delete a current session handle if</span>
+<span class="comment">%it exists</span>
+
+<span class="keyword">if</span> isfield(handles, <span class="string">'lh'</span>) || isfield(handles, <span class="string">'session'</span>)
+    stopMon(handles.figure1)
+    handles = guidata(handles.figure1);
+    handles = rmfield(handles, <span class="string">'session'</span>);
+<span class="keyword">end</span>
+guidata(handles.figure1,handles);
+
+<span class="keyword">try</span>
+device = daq.getDevices;
+<span class="keyword">catch</span> err
+    errordlg([<span class="string">'Error retrieving device list: '</span> err.identifier]);
+    e = -1;
+    msg = [<span class="string">'Error retrieving device list: '</span> err.identifier];
+    <span class="keyword">return</span>
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> isempty(device)
+    e = 0;
+    msg = <span class="string">'No devices found'</span>;
+    <span class="keyword">return</span>
+<span class="keyword">end</span>
+
+k = strcmpi(<span class="string">'National Instruments USB-6009'</span>, device.Description);
+
+<span class="keyword">if</span> all(k==0)
+    e = 0;
+    msg = <span class="string">'USB-6009 not found'</span>;
+    <span class="keyword">return</span>
+<span class="keyword">end</span>
+
+<span class="comment">% try</span>
+<span class="comment">%get index of matching element</span>
+index = find(k);
+index = index(1);
+
+<span class="comment">%get vendor and devicesID info</span>
+vendor = device(index).Vendor.ID;
+devID = device(index).ID;
+
+<span class="comment">%create session</span>
+s = daq.createSession(vendor);
+s.Rate = handles.sampleRate;
+s.IsContinuous = true;
+
+<span class="comment">%create channels</span>
+<span class="comment">%add if's to change if channels are created (check box in giu?)</span>
+[pwrCh, handles.pwrIdx] = addAnalogInputChannel(s, devID, <span class="string">'ai7'</span>, <span class="string">'Voltage'</span>);
+pwrCh.Name = <span class="string">'DiodePower'</span>;
+pwrCh.InputType = <span class="string">'SingleEnded'</span>;
+pwrCh.Range = [-10,10];
+[crvCh, handles.crvIdx] = addAnalogInputChannel(s, devID, <span class="string">'ai3'</span>, <span class="string">'Voltage'</span>);
+crvCh.Name = <span class="string">'DiodeCrossover'</span>;
+crvCh.InputType = <span class="string">'SingleEnded'</span>;
+crvCh.Range = [-10,10];
+[tmp1Ch, handles.tmp1Idx] = addAnalogInputChannel(s, devID, <span class="string">'ai1'</span>, <span class="string">'Voltage'</span>);
+tmp1Ch.Name = <span class="string">'Temperature1'</span>;
+tmp1Ch.InputType = <span class="string">'SingleEnded'</span>;
+tmp1Ch.Range = [-10,10];
+[tmp2Ch, handles.tmp2Idx] = addAnalogInputChannel(s, devID, <span class="string">'ai5'</span>, <span class="string">'Voltage'</span>);
+tmp2Ch.Name = <span class="string">'Temperature2'</span>;
+tmp2Ch.InputType = <span class="string">'SingleEnded'</span>;
+tmp2Ch.Range = [-10,10];
+[pscCh, handles.pscIdx] = addAnalogInputChannel(s, devID, <span class="string">'ai2'</span>, <span class="string">'Voltage'</span>);
+pscCh.Name = <span class="string">'PowerSupplyCurrent'</span>;
+pscCh.InputType = <span class="string">'Differential'</span>;
+pscCh.Range = [-10, 10];
+
+handles.session = s;
+guidata(handles.figure1,handles);
+
+<span class="comment">%set up/enable monitor button</span>
+set(handles.monToggle, <span class="string">'BackgroundColor'</span>, [0,1,0]);
+set(handles.monToggle, <span class="string">'String'</span>, <span class="string">'Start monitor'</span>);
+set(handles.monToggle, <span class="string">'Enable'</span>, <span class="string">'on'</span>);
+
+e = 1;
+msg = <span class="string">'Setup successful'</span>;
+<span class="keyword">return</span>
+
+<span class="comment">% catch err</span>
+<span class="comment">%     e = -1;</span>
+<span class="comment">%     msg = ['Device found - error occured during setup: ' err.identifier];</span>
+<span class="comment">% end</span>
+
+
+<span class="comment">%Start monitoring</span>
+<span class="keyword">function</span> startMon(hObject)
+<span class="comment">%hObject should be main figure handle.... can probably fix this</span>
+<span class="comment">%must be called once the devices are setup</span>
+<span class="comment">%daq session stored in handles.session</span>
+
+handles = guidata(hObject);
+
+<span class="comment">%check for device session</span>
+<span class="keyword">if</span> ~isfield(handles, <span class="string">'session'</span>)
+    errordlg(<span class="string">'Error starting monitors: No session ID'</span>, <span class="string">'Session Start Error'</span>)
+    <span class="keyword">return</span>
+<span class="keyword">end</span>
+
+<span class="comment">%initialize logging, if enabled</span>
+<span class="keyword">if</span> get(handles.logCheck, <span class="string">'Value'</span>) == 1
+
+    status = ovrwrtChecker(handles.figure1);
+    <span class="keyword">switch</span> status
+        <span class="keyword">case</span> 0
+            set(handles.monToggle, <span class="string">'Value'</span>, 0);
+            <span class="keyword">return</span>
+
+        <span class="keyword">case</span> 1
+            logData(handles,[]);
+
+        <span class="keyword">case</span> 2
+
+        <span class="keyword">otherwise</span>
+            set(handles.monToggle, <span class="string">'Value'</span>, 0);
+            <span class="keyword">return</span>
+    <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+
+<span class="comment">%set up listener</span>
+handles.session.NotifyWhenDataAvailableExceeds = handles.avgN;
+handles.lh = addlistener(handles.session, <span class="string">'DataAvailable'</span>, @(scr, event) updateDisplays(scr, event, hObject));
+startBackground(handles.session);
+guidata(hObject,handles);
+
+<span class="comment">%disable changes to logging</span>
+set(handles.logCheck, <span class="string">'Enable'</span>, <span class="string">'off'</span>);
+set(handles.logFilename, <span class="string">'Enable'</span>, <span class="string">'off'</span>);
+set(handles.browseFileButton, <span class="string">'Enable'</span>, <span class="string">'off'</span>);
+
+<span class="comment">%Change monitor toggle button</span>
+set(handles.monToggle, <span class="string">'BackgroundColor'</span>, [1,0,0]);
+set(handles.monToggle, <span class="string">'String'</span>, <span class="string">'Stop Monitor'</span>);
+
+
+<span class="comment">%Stop monitoring</span>
+<span class="keyword">function</span> stopMon(hObject)
+<span class="comment">%stop daq session</span>
+handles = guidata(hObject);
+
+<span class="keyword">if</span> isfield(handles, <span class="string">'session'</span>)
+    stop(handles.session);
+<span class="keyword">end</span>
+
+<span class="comment">%delete listener</span>
+<span class="keyword">if</span> isfield(handles,<span class="string">'lh'</span>)
+    delete(handles.lh)
+    handles = rmfield(handles, <span class="string">'lh'</span>);
+<span class="keyword">end</span>
+
+guidata(hObject,handles);
+
+<span class="comment">%Enable changes to logging</span>
+set(handles.logCheck, <span class="string">'Enable'</span>, <span class="string">'on'</span>);
+set(handles.logFilename, <span class="string">'Enable'</span>, <span class="string">'on'</span>);
+set(handles.browseFileButton, <span class="string">'Enable'</span>, <span class="string">'on'</span>);
+
+<span class="comment">%Change monitor toggle button</span>
+set(handles.monToggle, <span class="string">'BackgroundColor'</span>, [0,1,0]);
+set(handles.monToggle, <span class="string">'String'</span>, <span class="string">'Start Monitor'</span>);
+<span class="keyword">if</span> get(handles.monToggle, <span class="string">'Value'</span>) == 1
+    set(handles.monToggle, <span class="string">'Value'</span>, 0);
+<span class="keyword">end</span>
+
+
+<span class="comment">%Update plots and monitor displays</span>
+<span class="keyword">function</span> updateDisplays(src, event, hObject)
+<span class="comment">%hObject is mainfigure object</span>
+<span class="comment">%General approach:</span>
+<span class="comment">%1. check for display field: ensures data for display will be available</span>
+<span class="comment">%2. get raw voltage measurement from daq</span>
+<span class="comment">%3. convert voltage to relavent quantity</span>
+<span class="comment">%4. check range of measurement (safe, warning, danger), set display color</span>
+<span class="comment">%5. change string and color of display</span>
+
+handles = guidata(hObject);
+
+<span class="comment">%Get raw voltages</span>
+pwrVlt = mean(event.Data(:,handles.pwrIdx));
+crvVlt = mean(event.Data(:,handles.crvIdx));
+tmp1Vlt = mean(event.Data(:,handles.tmp1Idx));
+tmp2Vlt = mean(event.Data(:,handles.tmp2Idx));
+pscVlt = mean(event.Data(:,handles.pscIdx));
+
+<span class="comment">%pwr fluctuations instantaneous</span>
+pwrVltStd = std(event.Data(:,handles.pwrIdx));
+
+<span class="comment">%Updte raw Voltage Displays</span>
+set(handles.dpvDisp, <span class="string">'String'</span>, num2str(pwrVlt,<span class="string">'%.4f'</span>));
+set(handles.dcvDisp, <span class="string">'String'</span>, num2str(crvVlt,<span class="string">'%.4f'</span>));
+set(handles.pcvDisp, <span class="string">'String'</span>, num2str(pscVlt,<span class="string">'%.4f'</span>));
+set(handles.t1vDisp, <span class="string">'String'</span>, num2str(tmp1Vlt,<span class="string">'%.4f'</span>));
+set(handles.t2vDisp, <span class="string">'String'</span>, num2str(tmp2Vlt,<span class="string">'%.4f'</span>));
+
+cal2use = get(get(handles.calibrationPanel, <span class="string">'SelectedObject'</span>),<span class="string">'String'</span>);
+
+<span class="comment">%Power display</span>
+<span class="keyword">if</span> pwrVlt &lt;= 0.01
+   curPow = 0;
+<span class="keyword">elseif</span> strcmpi(cal2use, <span class="string">'Voltage'</span>)
+    curPow = polyval(handles.pwrCalCoef,pwrVlt);
+<span class="keyword">elseif</span> strcmpi(cal2use, <span class="string">'Current'</span>)
+    curPow = polyval(handles.pwrEstCoef,pscVlt);
+<span class="keyword">else</span>
+    <span class="comment">%this is just a placeholder for now</span>
+    display(<span class="string">'Check calibration!!! Wrong part of calibration ifs'</span>)
+    curPow = polyval(handles.pwrEstCoef,pscVlt);
+<span class="keyword">end</span>
+
+powStr = num2str(curPow,<span class="string">'%.1f'</span>);
+set(handles.pwrDisp, <span class="string">'String'</span>, powStr);
+
+<span class="comment">%Current, power supply display</span>
+<span class="keyword">if</span> pscVlt &lt;0.002
+    curPsc = 0;
+<span class="keyword">else</span>
+    curPsc = polyval(handles.pscCalCoef, pscVlt);
+<span class="keyword">end</span>
+
+pscStr = num2str(curPsc,<span class="string">'%4.2f'</span>);
+set(handles.pscDisp, <span class="string">'String'</span>, pscStr);
+
+<span class="comment">%Crossover display, changing to 'noise'</span>
+curCrv = curPow*(pwrVltStd/pwrVlt);
+
+<span class="comment">%if curCrv &gt;= handles.crvDng</span>
+<span class="comment">%   crvCol = handles.dngCol;    %danger, red color</span>
+<span class="comment">%elseif curCrv &gt;= handles.crvWrn</span>
+<span class="comment">%    crvCol = handles.wrnCol;   %warning, yellow</span>
+<span class="comment">%else</span>
+<span class="comment">%    crvCol = handles.safeCol;   %safe, green</span>
+<span class="comment">%end</span>
+
+crvStr = num2str(curCrv,<span class="string">'%.4f'</span>);
+set(handles.dnpDisp, <span class="string">'String'</span>, crvStr);
+<span class="comment">%set(handles.dnpDisp, 'ForegroundColor', crvCol);</span>
+
+<span class="comment">%Temperature 1 display</span>
+curTmp1 = (tmp1Vlt - handles.tmp1Ofs)/handles.tmp1Cal;
+
+<span class="keyword">if</span> curTmp1 &lt;= handles.tmpDng1(1) || curTmp1 &gt;= handles.tmpDng1(2)
+   tmpCol = handles.dngCol;    <span class="comment">%danger, red color</span>
+<span class="keyword">elseif</span> curTmp1 &lt;= handles.tmpWrn1(1) || curTmp1 &gt;= handles.tmpWrn1(2)
+    tmpCol = handles.wrnCol;   <span class="comment">%warning, yellow</span>
+<span class="keyword">else</span>
+    tmpCol = handles.safeCol;   <span class="comment">%safe, green</span>
+<span class="keyword">end</span>
+
+set(handles.tmp1Disp, <span class="string">'String'</span>, num2str(curTmp1,<span class="string">'%.1f'</span>));
+set(handles.tmp1Disp, <span class="string">'ForegroundColor'</span>, tmpCol);
+
+<span class="comment">%Temperature 2 (xstal) display</span>
+curTmp2 = (tmp2Vlt - handles.tmp2Ofs)/handles.tmp2Cal;
+
+<span class="keyword">if</span> curTmp2 &lt;= handles.tmpDng2(1) || curTmp2 &gt;= handles.tmpDng2(2)
+   tmpCol = handles.dngCol;    <span class="comment">%danger, red color</span>
+<span class="keyword">elseif</span> curTmp2 &lt;= handles.tmpWrn2(1) || curTmp2 &gt;= handles.tmpWrn2(2)
+    tmpCol = handles.wrnCol;   <span class="comment">%warning, yellow</span>
+<span class="keyword">else</span>
+    tmpCol = handles.safeCol;   <span class="comment">%safe, green</span>
+<span class="keyword">end</span>
+
+set(handles.tmp2Disp, <span class="string">'String'</span>, num2str(curTmp2,<span class="string">'%.1f'</span>));
+set(handles.tmp2Disp, <span class="string">'ForegroundColor'</span>, tmpCol);
+
+<span class="comment">%time of day</span>
+set(handles.todText, <span class="string">'String'</span>, datestr(now, <span class="string">'dd-mmm-yyyy HH:MM:SS'</span>));
+
+<span class="comment">%Log data if enabled</span>
+<span class="keyword">if</span> get(handles.logCheck, <span class="string">'Value'</span>) == 1
+    <span class="comment">%only log every second</span>
+    i = handles.logNum;
+    <span class="keyword">if</span> mod(i,handles.refreshRate) == 0
+        logData(handles,[(event.TriggerTime + mean(event.TimeStamps)/86400),curPsc,curPow,curCrv,curTmp1,curTmp2]);
+    <span class="keyword">end</span>
+    handles.logNum = i+1;
+    guidata(hObject,handles);
+<span class="keyword">end</span>
+
+
+
+<span class="comment">%Log data to file</span>
+<span class="keyword">function</span> logData(handles, data)
+<span class="comment">%send empty data field to initialize log</span>
+<span class="comment">% data format --&gt; [timeNum, power, crossover, temp1, temp2]</span>
+
+<span class="keyword">if</span> isempty(data)
+    <span class="comment">%initialize log file</span>
+    fileid = fopen(get(handles.logFilename, <span class="string">'String'</span>), <span class="string">'wt'</span>);
+    fprintf(fileid, <span class="string">'%s\n'</span>, datestr(now, <span class="string">'dd-mmm-yyyy HH:MM:SS'</span>));
+    fprintf(fileid, <span class="string">'REGEN System Monitor\n\n'</span>);
+    fprintf(fileid, <span class="string">'Sampling rate =\t%.3f Hz\n'</span>, handles.sampleRate);
+    fprintf(fileid, <span class="string">'Number of samples averaged =\t%.0f\n'</span>, handles.avgN);
+    fprintf(fileid, <span class="string">'Power Calibration (a0...aN):\t%s\n'</span>, sprintf(<span class="string">'%.4f\t'</span>, handles.pwrCalCoef));
+
+    fprintf(fileid,<span class="string">'\n%23s\t%8s\t%8s\t%8s\t%8s\t%8s\n'</span>,<span class="string">'Time'</span>,<span class="string">'Current'</span>,<span class="string">'Power'</span>,<span class="string">'Crossover'</span>, <span class="string">'T1'</span>, <span class="string">'T2'</span>);
+    fprintf(fileid,<span class="string">'%23s\t%8s\t%8s\t%8s\t%8s\t%8s\n'</span>,<span class="string">'yyyy/mm/dd hh:mm:ss.fff'</span>,<span class="string">'(A)'</span>,<span class="string">'(W)'</span>,<span class="string">'(ratio)'</span>, <span class="string">'(degC)'</span>, <span class="string">'(degC)'</span>);
+    fclose(fileid);
+
+<span class="keyword">else</span>
+    <span class="comment">%append to log</span>
+    <span class="keyword">if</span> length(data) &lt; 6
+        data = [data, zeros(6-length(data))];
+    <span class="keyword">end</span>
+
+    fileid = fopen(get(handles.logFilename, <span class="string">'String'</span>), <span class="string">'at'</span>);
+    fprintf(fileid,<span class="string">'%23s\t%8.4f\t%8.3f\t%8.5f\t%8.2f\t%8.2f\n'</span>, datestr(data(1), <span class="string">'yyyy/mm/dd HH:MM:SS.FFF'</span>),data(2:6));
+    fclose(fileid);
+
+<span class="keyword">end</span>
+
+
+<span class="keyword">function</span> status = ovrwrtChecker(mainFigure)
+<span class="comment">%status = 0 means do not proceed (to be used by calling function)</span>
+<span class="comment">%status = 1 means proceed to overwrite</span>
+<span class="comment">%status = 2 means append file</span>
+
+handles = guidata(mainFigure);
+[path,name,ext] = fileparts(get(handles.logFilename, <span class="string">'String'</span>));
+
+status = 0;
+<span class="comment">%check for existing file</span>
+<span class="keyword">if</span> exist(fullfile(path,[name ext]),<span class="string">'file'</span>) == 2
+
+    <span class="comment">%file already exists, promt for overwrite</span>
+    buttonName = questdlg(sprintf(<span class="string">'File already exists. Overwrite?\nCancel to change file.'</span>), <span class="string">'Path warning'</span>, <span class="string">'Overwrite'</span>, <span class="string">'Append file'</span>, <span class="string">'Disable log'</span>, <span class="string">'Disable log'</span>);
+    <span class="keyword">switch</span> buttonName
+        <span class="keyword">case</span> <span class="string">'Append file'</span>
+            status = 2;
+
+        <span class="keyword">case</span> <span class="string">'Overwrite'</span>
+            status = 1;
+
+        <span class="keyword">case</span> <span class="string">'Disable log'</span>
+            set(handles.logCheck, <span class="string">'Value'</span>, 0);
+            status = 1;
+
+        <span class="keyword">otherwise</span>
+            set(handles.logCheck, <span class="string">'Value'</span>, 0);
+            status = 0;
+    <span class="keyword">end</span>
+
+<span class="keyword">else</span>
+    <span class="comment">%file does not exist, will be created when logging begins</span>
+    status = 1;
+<span class="keyword">end</span>
+
+
+<span class="keyword">function</span> setCalibration(mainFigure)
+    <span class="comment">%This function sets the power calibration coefficients based on the set temperature</span>
+    <span class="comment">%mainFigure = main figure handle</span>
+    <span class="comment">%output = [a3, a2, a1, a0]</span>
+
+handles = guidata(mainFigure);
+
+temp = handles.diodeCalTemp;
+
+cal_temp = [20,25,30,35];
+<span class="comment">%diode monitor voltage to power coeffs (calibrated)</span>
+<span class="comment">%a3,a2,a1,a0</span>
+voltage_cal_coef = [<span class="keyword">...</span>
+    [0.09364815449 -1.303392134 22.00926798 2.175942706];<span class="keyword">...</span>
+    [0.3715309952 -3.340790084 24.86181978 0.7029328495];<span class="keyword">...</span>
+    [0.487521366 -3.639501926 23.90466826 0.262408398];<span class="keyword">...</span>
+    [0.3162068009 -2.021543564 20.24440997 1.148156743]];
+
+<span class="comment">%current to power coeffs (calibrated)</span>
+current_cal_coef = [<span class="keyword">...</span>
+    [4.612008094 -9.575995553];<span class="keyword">...</span>
+    [4.478570276 -9.753289314];<span class="keyword">...</span>
+    [4.416482464 -10.57545691];<span class="keyword">...</span>
+    [4.396149062 -11.30721815]];
+
+<span class="comment">%power supply monitor voltage to current (calibrated)</span>
+psc_cal_coef = handles.pscCalCoef;
+
+output_voltage_coef = interp1(cal_temp,voltage_cal_coef,temp, <span class="string">'linear'</span>, <span class="string">'extrap'</span>);
+current_coef = interp1(cal_temp,current_cal_coef,temp, <span class="string">'linear'</span>, <span class="string">'extrap'</span>);
+<span class="comment">%calculate coeff for direct psmv2power (don't calc curent explicitly)</span>
+output_current_coef = [current_coef(1)*psc_cal_coef(1), current_coef(2)+current_coef(1)*psc_cal_coef(2)];
+handles.pwrCalCoef = output_voltage_coef;
+handles.pwrEstCoef = output_current_coef;
+
+guidata(mainFigure,handles);
+
+
+<span class="comment">% --- End user functions</span>
+
+
+<span class="comment">% --- Executes just before regen_monitor is made visible.</span>
+<span class="keyword">function</span> regen_monitor_OpeningFcn(hObject, eventdata, handles, varargin)
+<span class="comment">% This function has no output args, see OutputFcn.</span>
+<span class="comment">% hObject    handle to figure</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+<span class="comment">% varargin   command line arguments to regen_monitor (see VARARGIN)</span>
+
+<span class="comment">% Choose default command line output for regen_monitor</span>
+handles.output = hObject;
+
+<span class="comment">% Update handles structure, set 'global' parameters</span>
+handles.pwrCalCoef = [0.4315403228 28.14068064 -3.770681968 0.4096289863];   <span class="comment">%power cal coeffs, calc power from monitor voltage, an an-1...</span>
+handles.pwrEstCoef = [30.76897313 -11.93860021];    <span class="comment">%power estimate coeffs, calc power from current mon voltage, a1 a0</span>
+handles.pscCalCoef = [5.977168596 0.009309869398];  <span class="comment">%curent power supply cal coeffs, a1 a0</span>
+handles.diodeCalTemp = 35;                <span class="comment">%temperature for diode calibration</span>
+
+handles.crvWrn = 0.8;               <span class="comment">%crv Warning level</span>
+handles.crvDng = 1;                 <span class="comment">%crv Danger level</span>
+handles.tmp1Cal = 0.00499;          <span class="comment">%temp1 calibration, V/degC</span>
+handles.tmp1Ofs = 1.2370;           <span class="comment">%temp1 offset, V</span>
+handles.tmp2Cal = 0.004905;         <span class="comment">%temp2 calibration, V/degC</span>
+handles.tmp2Ofs = 1.2335;           <span class="comment">%temp2 offset, V</span>
+handles.tmpWrn1 = [25,40];           <span class="comment">%temp warning, degC, diode</span>
+handles.tmpDng1 = [20,45];           <span class="comment">%temp danger, degC, diode</span>
+handles.tmpWrn2 = [10,20];           <span class="comment">%temp warning, degC, xstal</span>
+handles.tmpDng2 = [05,25];           <span class="comment">%temp danger, degC, xstal</span>
+
+handles.avgN = 1000;                <span class="comment">%number of scans to average per update</span>
+handles.refreshRate = 5;            <span class="comment">%refresh rate, times per second</span>
+handles.logNum = 0;
+handles.dngCol = [.75 0 0];         <span class="comment">%'danger' color (red)</span>
+handles.wrnCol = [.75 .5 0];       <span class="comment">%'warning' color (yellow)</span>
+handles.safeCol = [.25 .5 0];        <span class="comment">%'safe' color (green)</span>
+
+maxSampleRate = 9600;
+handles.sampleRate = handles.avgN*handles.refreshRate;
+
+<span class="keyword">if</span> handles.sampleRate &gt;= maxSampleRate
+    handles.sampleRate = maxSampleRate;
+    handles.refreshRate = handles.sampleRate/handles.avgN;
+<span class="keyword">end</span>
+
+<span class="comment">%set(findall(handles.cryPanel, '-property', 'enable'), 'enable', 'off')</span>
+
+guidata(hObject, handles);
+setCalibration(handles.figure1);
+
+<span class="comment">% UIWAIT makes regen_monitor wait for user response (see UIRESUME)</span>
+<span class="comment">% uiwait(handles.figure1);</span>
+
+
+<span class="comment">% --- Outputs from this function are returned to the command line.</span>
+<span class="keyword">function</span> varargout = regen_monitor_OutputFcn(hObject, eventdata, handles)
+<span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+<span class="comment">% hObject    handle to figure</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Get default command line output from handles structure</span>
+varargout{1} = handles.output;
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> tmp1Unit_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to tmp1Unit (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">%sets display  to deg Celcius</span>
+set(hObject, <span class="string">'String'</span>, [char(176),<span class="string">'C'</span>])
+
+
+<span class="comment">% --- Executes on button press in scanBtn.</span>
+<span class="keyword">function</span> scanBtn_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to scanBtn (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">%scan for devices</span>
+[e,msg] = scanDev(hObject, handles);
+
+<span class="keyword">switch</span> e
+    <span class="keyword">case</span> -1
+        <span class="comment">%error occured</span>
+        errordlg(msg, <span class="string">'Connection Error'</span>);
+    <span class="keyword">case</span> 0
+        <span class="comment">%no deivces</span>
+        msgbox(msg,<span class="string">'Connection Error'</span>, <span class="string">'warn'</span>);
+    <span class="keyword">case</span> 1
+        <span class="comment">%all good</span>
+    <span class="keyword">otherwise</span>
+        <span class="comment">%error</span>
+        errordlg([<span class="string">'Unknown error occured: '</span> msg], <span class="string">'Connection Error'</span>);
+<span class="keyword">end</span>
+
+
+<span class="comment">% --- Executes on button press in monToggle.</span>
+<span class="keyword">function</span> monToggle_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to monToggle (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+button_state = get(hObject,<span class="string">'Value'</span>);
+
+<span class="keyword">if</span> button_state == get(hObject, <span class="string">'Max'</span>)
+    <span class="comment">%button presed</span>
+<span class="comment">%     try</span>
+        startMon(handles.figure1);
+<span class="comment">%     catch err</span>
+<span class="comment">%         errordlg(['Error starting monitors: ' err.identifier], 'Monitor Error');</span>
+<span class="comment">%</span>
+<span class="comment">%     end</span>
+
+
+<span class="keyword">elseif</span> button_state == get(hObject, <span class="string">'Min'</span>)
+    <span class="comment">%not pressed</span>
+    <span class="keyword">try</span>
+        stopMon(handles.figure1);
+    <span class="keyword">catch</span> err
+        errordlg([<span class="string">'Error stoping monitors: '</span> err.identifier], <span class="string">'Monitor Error'</span>);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+
+<span class="comment">% --- Executes on button press in logCheck.</span>
+<span class="keyword">function</span> logCheck_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to logCheck (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hint: get(hObject,'Value') returns toggle state of logCheck</span>
+<span class="keyword">if</span> get(hObject, <span class="string">'Value'</span>) == 1
+    <span class="comment">%separate filename and path</span>
+    [path,name,ext] = fileparts(get(handles.logFilename, <span class="string">'String'</span>));
+
+    <span class="comment">%check for valid path</span>
+    <span class="keyword">while</span> exist(path, <span class="string">'dir'</span>) ~= 7
+        <span class="comment">%open system dialog to select file/location</span>
+        [fileName, pathName] = uiputfile( <span class="string">'*.txt'</span>, <span class="string">'Invalid save location'</span>, <span class="string">'D:\Miller Group Users'</span>);
+
+        <span class="comment">%if the user presses 'cancel', uncheck log box</span>
+        <span class="keyword">if</span> pathName == 0
+            set(handles.logCheck, <span class="string">'Value'</span>, 0);
+            <span class="keyword">break</span>;
+        <span class="keyword">end</span>
+
+        <span class="comment">%set file location string</span>
+        set(handles.logFilename,<span class="string">'String'</span>,[pathName,fileName]);
+        [path,name,ext] = fileparts(get(handles.logFilename, <span class="string">'String'</span>));
+    <span class="keyword">end</span>
+
+<span class="comment">%     %check for existing file</span>
+<span class="comment">%     changeFile = true;</span>
+<span class="comment">%     while changeFile</span>
+<span class="comment">%</span>
+<span class="comment">%         if exist(fullfile(path,[name ext]),'file') == 2</span>
+<span class="comment">%</span>
+<span class="comment">%             %file already exists, promt for overwrite</span>
+<span class="comment">%             buttonName = questdlg('File already exists. Overwrite?', 'Path warning', 'Cancel', 'Change file', 'Overwrite', 'Cancel');</span>
+<span class="comment">%             switch buttonName</span>
+<span class="comment">%                 case 'Cancel'</span>
+<span class="comment">%                     set(handles.logCheck, 'Value', 0);</span>
+<span class="comment">%                     return</span>
+<span class="comment">%</span>
+<span class="comment">%                 case 'Change file'</span>
+<span class="comment">%                     %open system dialog to select new file</span>
+<span class="comment">%                     [fileName, path] = uiputfile( '*.txt', 'Invalid save location', 'D:\Miller Group Users');</span>
+<span class="comment">%                     set(handles.logFilename,'String',[path,fileName]);</span>
+<span class="comment">%                     [path,name,ext] = fileparts(get(handles.logFilename, 'String'));</span>
+<span class="comment">%</span>
+<span class="comment">%                 case 'Overwrite'</span>
+<span class="comment">%                     changeFile = false;</span>
+<span class="comment">%</span>
+<span class="comment">%                 otherwise</span>
+<span class="comment">%                     set(handles.logCheck, 'Value', 0);</span>
+<span class="comment">%                     return</span>
+<span class="comment">%             end</span>
+<span class="comment">%</span>
+<span class="comment">%         else</span>
+<span class="comment">%             %file does not exist, will be created when logging begins</span>
+<span class="comment">%             changeFile = false;</span>
+<span class="comment">%         end</span>
+<span class="comment">%</span>
+<span class="comment">%     end</span>
+
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> logFilename_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to logFilename (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of logFilename as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of logFilename as a double</span>
+
+<span class="comment">%run log checkbox callback to determine if filename is ok</span>
+logCheck_Callback(handles.logCheck, eventdata, handles);
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> logFilename_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to logFilename (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+<span class="comment">% --- Executes on button press in browseFileButton.</span>
+<span class="keyword">function</span> browseFileButton_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to browseFileButton (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">%opens system dialog to selecct file</span>
+[fileName, pathName] = uiputfile( <span class="string">'*.txt'</span>, <span class="string">'Save file'</span>, <span class="string">'D:\Miller Group Users'</span>);
+set(handles.logFilename,<span class="string">'String'</span>,[pathName,fileName]);
+
+<span class="comment">%run log checkbox callback to determine if filename is ok</span>
+logCheck_Callback(handles.logCheck, eventdata, handles);
+
+
+
+<span class="keyword">function</span> calTempEdit_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to calTempEdit (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of calTempEdit as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of calTempEdit as a double</span>
+
+temp = str2double(get(hObject,<span class="string">'String'</span>));
+
+<span class="keyword">if</span> isnan(temp)
+    set(hObject, <span class="string">'String'</span>, num2str(handles.diodeCalTemp));
+<span class="keyword">else</span>
+    handles.diodeCalTemp = temp;
+<span class="keyword">end</span>
+
+guidata(handles.figure1,handles);
+setCalibration(handles.figure1);
+
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> calTempEdit_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to calTempEdit (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+<span class="comment">% --- Executes when selected object is changed in calibrationPanel.</span>
+<span class="keyword">function</span> calibrationPanel_SelectionChangeFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to the selected object in calibrationPanel</span>
+<span class="comment">% eventdata  structure with the following fields (see UIBUTTONGROUP)</span>
+<span class="comment">%	EventName: string 'SelectionChanged' (read only)</span>
+<span class="comment">%	OldValue: handle of the previously selected object or empty if none was selected</span>
+<span class="comment">%	NewValue: handle of the currently selected object</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">%get(handles.calibrationPanel, 'Value')</span>
+</pre><img vspace="5" hspace="5" src="regen_monitor_01.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function varargout = regen_monitor(varargin)
+% REGEN_MONITOR MATLAB code for regen_monitor.fig
+%      REGEN_MONITOR, by itself, creates a new REGEN_MONITOR or raises the existing
+%      singleton*.
+%
+%      H = REGEN_MONITOR returns the handle to a new REGEN_MONITOR or the handle to
+%      the existing singleton*.
+%
+%      REGEN_MONITOR('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in REGEN_MONITOR.M with the given input arguments.
+%
+%      REGEN_MONITOR('Property','Value',...) creates a new REGEN_MONITOR or raises the
+%      existing singleton*.  Starting from the left, property value pairs are
+%      applied to the GUI before regen_monitor_OpeningFcn gets called.  An
+%      unrecognized property name or invalid value makes property application
+%      stop.  All inputs are passed to regen_monitor_OpeningFcn via varargin.
+%
+%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
+%      instance to run (singleton)".
+%
+% See also: GUIDE, GUIDATA, GUIHANDLES
+
+% Edit the above text to modify the response to help regen_monitor
+
+% Last Modified by GUIDE v2.5 31-Mar-2017 15:51:42
+
+% Begin initialization code - DO NOT EDIT
+gui_Singleton = 1;
+gui_State = struct('gui_Name',       mfilename, ...
+                   'gui_Singleton',  gui_Singleton, ...
+                   'gui_OpeningFcn', @regen_monitor_OpeningFcn, ...
+                   'gui_OutputFcn',  @regen_monitor_OutputFcn, ...
+                   'gui_LayoutFcn',  [] , ...
+                   'gui_Callback',   []);
+if nargin && ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+end
+
+if nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+else
+    gui_mainfcn(gui_State, varargin{:});
+end
+% End initialization code - DO NOT EDIT
+
+
+% REPLACE_WITH_DASH_DASH- User defined functions
+
+%Scan for daq device and set up channels. Set up daq
+function [e,msg] = scanDev(hObject, handles)
+%should insert section to check for and delete a current session handle if
+%it exists
+
+if isfield(handles, 'lh') || isfield(handles, 'session')
+    stopMon(handles.figure1)
+    handles = guidata(handles.figure1);
+    handles = rmfield(handles, 'session');
+end
+guidata(handles.figure1,handles);
+
+try
+device = daq.getDevices;
+catch err
+    errordlg(['Error retrieving device list: ' err.identifier]);
+    e = -1;
+    msg = ['Error retrieving device list: ' err.identifier];
+    return
+end 
+
+if isempty(device)
+    e = 0;
+    msg = 'No devices found';
+    return
+end
+
+k = strcmpi('National Instruments USB-6009', device.Description);
+
+if all(k==0)
+    e = 0;
+    msg = 'USB-6009 not found';
+    return
+end
+
+% try
+%get index of matching element
+index = find(k);
+index = index(1);
+
+%get vendor and devicesID info
+vendor = device(index).Vendor.ID;
+devID = device(index).ID;
+
+%create session
+s = daq.createSession(vendor);
+s.Rate = handles.sampleRate;
+s.IsContinuous = true;
+
+%create channels
+%add if's to change if channels are created (check box in giu?)
+[pwrCh, handles.pwrIdx] = addAnalogInputChannel(s, devID, 'ai7', 'Voltage');
+pwrCh.Name = 'DiodePower';
+pwrCh.InputType = 'SingleEnded';
+pwrCh.Range = [-10,10];
+[crvCh, handles.crvIdx] = addAnalogInputChannel(s, devID, 'ai3', 'Voltage');
+crvCh.Name = 'DiodeCrossover';
+crvCh.InputType = 'SingleEnded';
+crvCh.Range = [-10,10];
+[tmp1Ch, handles.tmp1Idx] = addAnalogInputChannel(s, devID, 'ai1', 'Voltage');
+tmp1Ch.Name = 'Temperature1';
+tmp1Ch.InputType = 'SingleEnded';
+tmp1Ch.Range = [-10,10];
+[tmp2Ch, handles.tmp2Idx] = addAnalogInputChannel(s, devID, 'ai5', 'Voltage');
+tmp2Ch.Name = 'Temperature2';
+tmp2Ch.InputType = 'SingleEnded';
+tmp2Ch.Range = [-10,10];
+[pscCh, handles.pscIdx] = addAnalogInputChannel(s, devID, 'ai2', 'Voltage');
+pscCh.Name = 'PowerSupplyCurrent';
+pscCh.InputType = 'Differential';
+pscCh.Range = [-10, 10];
+
+handles.session = s;
+guidata(handles.figure1,handles);
+
+%set up/enable monitor button
+set(handles.monToggle, 'BackgroundColor', [0,1,0]);
+set(handles.monToggle, 'String', 'Start monitor');
+set(handles.monToggle, 'Enable', 'on');
+
+e = 1;
+msg = 'Setup successful';
+return
+
+% catch err
+%     e = -1;
+%     msg = ['Device found - error occured during setup: ' err.identifier];
+% end
+
+
+%Start monitoring
+function startMon(hObject)
+%hObject should be main figure handle.... can probably fix this
+%must be called once the devices are setup
+%daq session stored in handles.session
+
+handles = guidata(hObject);
+
+%check for device session
+if ~isfield(handles, 'session')
+    errordlg('Error starting monitors: No session ID', 'Session Start Error')
+    return
+end
+
+%initialize logging, if enabled
+if get(handles.logCheck, 'Value') == 1
+    
+    status = ovrwrtChecker(handles.figure1);
+    switch status
+        case 0
+            set(handles.monToggle, 'Value', 0);
+            return
+            
+        case 1
+            logData(handles,[]);
+            
+        case 2
+            
+        otherwise
+            set(handles.monToggle, 'Value', 0);
+            return      
+    end
+    
+end
+
+%set up listener
+handles.session.NotifyWhenDataAvailableExceeds = handles.avgN;
+handles.lh = addlistener(handles.session, 'DataAvailable', @(scr, event) updateDisplays(scr, event, hObject));
+startBackground(handles.session);
+guidata(hObject,handles);
+
+%disable changes to logging
+set(handles.logCheck, 'Enable', 'off');
+set(handles.logFilename, 'Enable', 'off');
+set(handles.browseFileButton, 'Enable', 'off');
+
+%Change monitor toggle button
+set(handles.monToggle, 'BackgroundColor', [1,0,0]);
+set(handles.monToggle, 'String', 'Stop Monitor');
+
+
+%Stop monitoring
+function stopMon(hObject)
+%stop daq session
+handles = guidata(hObject);
+
+if isfield(handles, 'session')
+    stop(handles.session);
+end
+
+%delete listener
+if isfield(handles,'lh')
+    delete(handles.lh)
+    handles = rmfield(handles, 'lh');
+end
+
+guidata(hObject,handles);
+
+%Enable changes to logging
+set(handles.logCheck, 'Enable', 'on');
+set(handles.logFilename, 'Enable', 'on');
+set(handles.browseFileButton, 'Enable', 'on');
+
+%Change monitor toggle button
+set(handles.monToggle, 'BackgroundColor', [0,1,0]);
+set(handles.monToggle, 'String', 'Start Monitor');
+if get(handles.monToggle, 'Value') == 1
+    set(handles.monToggle, 'Value', 0);
+end
+
+
+%Update plots and monitor displays
+function updateDisplays(src, event, hObject)
+%hObject is mainfigure object
+%General approach:
+%1. check for display field: ensures data for display will be available
+%2. get raw voltage measurement from daq
+%3. convert voltage to relavent quantity
+%4. check range of measurement (safe, warning, danger), set display color
+%5. change string and color of display
+
+handles = guidata(hObject);
+
+%Get raw voltages
+pwrVlt = mean(event.Data(:,handles.pwrIdx));
+crvVlt = mean(event.Data(:,handles.crvIdx));
+tmp1Vlt = mean(event.Data(:,handles.tmp1Idx));
+tmp2Vlt = mean(event.Data(:,handles.tmp2Idx));
+pscVlt = mean(event.Data(:,handles.pscIdx));
+
+%pwr fluctuations instantaneous
+pwrVltStd = std(event.Data(:,handles.pwrIdx));
+
+%Updte raw Voltage Displays
+set(handles.dpvDisp, 'String', num2str(pwrVlt,'%.4f'));
+set(handles.dcvDisp, 'String', num2str(crvVlt,'%.4f'));
+set(handles.pcvDisp, 'String', num2str(pscVlt,'%.4f'));
+set(handles.t1vDisp, 'String', num2str(tmp1Vlt,'%.4f'));
+set(handles.t2vDisp, 'String', num2str(tmp2Vlt,'%.4f'));
+
+cal2use = get(get(handles.calibrationPanel, 'SelectedObject'),'String');
+
+%Power display
+if pwrVlt <= 0.01
+   curPow = 0; 
+elseif strcmpi(cal2use, 'Voltage')
+    curPow = polyval(handles.pwrCalCoef,pwrVlt);
+elseif strcmpi(cal2use, 'Current')
+    curPow = polyval(handles.pwrEstCoef,pscVlt);
+else
+    %this is just a placeholder for now
+    display('Check calibration!!! Wrong part of calibration ifs')
+    curPow = polyval(handles.pwrEstCoef,pscVlt);
+end
+
+powStr = num2str(curPow,'%.1f');
+set(handles.pwrDisp, 'String', powStr);
+
+%Current, power supply display
+if pscVlt <0.002
+    curPsc = 0;
+else
+    curPsc = polyval(handles.pscCalCoef, pscVlt);
+end
+
+pscStr = num2str(curPsc,'%4.2f');
+set(handles.pscDisp, 'String', pscStr);
+
+%Crossover display, changing to 'noise'
+curCrv = curPow*(pwrVltStd/pwrVlt);
+
+%if curCrv >= handles.crvDng 
+%   crvCol = handles.dngCol;    %danger, red color
+%elseif curCrv >= handles.crvWrn
+%    crvCol = handles.wrnCol;   %warning, yellow
+%else
+%    crvCol = handles.safeCol;   %safe, green
+%end
+
+crvStr = num2str(curCrv,'%.4f'); 
+set(handles.dnpDisp, 'String', crvStr);
+%set(handles.dnpDisp, 'ForegroundColor', crvCol);
+
+%Temperature 1 display
+curTmp1 = (tmp1Vlt - handles.tmp1Ofs)/handles.tmp1Cal;
+
+if curTmp1 <= handles.tmpDng1(1) || curTmp1 >= handles.tmpDng1(2) 
+   tmpCol = handles.dngCol;    %danger, red color
+elseif curTmp1 <= handles.tmpWrn1(1) || curTmp1 >= handles.tmpWrn1(2)
+    tmpCol = handles.wrnCol;   %warning, yellow
+else
+    tmpCol = handles.safeCol;   %safe, green
+end
+
+set(handles.tmp1Disp, 'String', num2str(curTmp1,'%.1f'));
+set(handles.tmp1Disp, 'ForegroundColor', tmpCol);
+
+%Temperature 2 (xstal) display
+curTmp2 = (tmp2Vlt - handles.tmp2Ofs)/handles.tmp2Cal;
+
+if curTmp2 <= handles.tmpDng2(1) || curTmp2 >= handles.tmpDng2(2) 
+   tmpCol = handles.dngCol;    %danger, red color
+elseif curTmp2 <= handles.tmpWrn2(1) || curTmp2 >= handles.tmpWrn2(2)
+    tmpCol = handles.wrnCol;   %warning, yellow
+else
+    tmpCol = handles.safeCol;   %safe, green
+end
+
+set(handles.tmp2Disp, 'String', num2str(curTmp2,'%.1f'));
+set(handles.tmp2Disp, 'ForegroundColor', tmpCol);
+
+%time of day
+set(handles.todText, 'String', datestr(now, 'dd-mmm-yyyy HH:MM:SS'));
+
+%Log data if enabled
+if get(handles.logCheck, 'Value') == 1
+    %only log every second
+    i = handles.logNum;
+    if mod(i,handles.refreshRate) == 0
+        logData(handles,[(event.TriggerTime + mean(event.TimeStamps)/86400),curPsc,curPow,curCrv,curTmp1,curTmp2]);
+    end
+    handles.logNum = i+1;
+    guidata(hObject,handles);
+end
+
+
+
+%Log data to file
+function logData(handles, data)
+%send empty data field to initialize log
+% data format REPLACE_WITH_DASH_DASH> [timeNum, power, crossover, temp1, temp2]
+
+if isempty(data)
+    %initialize log file
+    fileid = fopen(get(handles.logFilename, 'String'), 'wt');
+    fprintf(fileid, '%s\n', datestr(now, 'dd-mmm-yyyy HH:MM:SS'));
+    fprintf(fileid, 'REGEN System Monitor\n\n');
+    fprintf(fileid, 'Sampling rate =\t%.3f Hz\n', handles.sampleRate);
+    fprintf(fileid, 'Number of samples averaged =\t%.0f\n', handles.avgN);
+    fprintf(fileid, 'Power Calibration (a0...aN):\t%s\n', sprintf('%.4f\t', handles.pwrCalCoef));
+    
+    fprintf(fileid,'\n%23s\t%8s\t%8s\t%8s\t%8s\t%8s\n','Time','Current','Power','Crossover', 'T1', 'T2');
+    fprintf(fileid,'%23s\t%8s\t%8s\t%8s\t%8s\t%8s\n','yyyy/mm/dd hh:mm:ss.fff','(A)','(W)','(ratio)', '(degC)', '(degC)');
+    fclose(fileid);
+    
+else
+    %append to log
+    if length(data) < 6
+        data = [data, zeros(6-length(data))];
+    end
+    
+    fileid = fopen(get(handles.logFilename, 'String'), 'at');
+    fprintf(fileid,'%23s\t%8.4f\t%8.3f\t%8.5f\t%8.2f\t%8.2f\n', datestr(data(1), 'yyyy/mm/dd HH:MM:SS.FFF'),data(2:6));
+    fclose(fileid);
+    
+end
+
+
+function status = ovrwrtChecker(mainFigure)
+%status = 0 means do not proceed (to be used by calling function)
+%status = 1 means proceed to overwrite
+%status = 2 means append file
+
+handles = guidata(mainFigure);
+[path,name,ext] = fileparts(get(handles.logFilename, 'String'));
+
+status = 0;
+%check for existing file
+if exist(fullfile(path,[name ext]),'file') == 2
+    
+    %file already exists, promt for overwrite
+    buttonName = questdlg(sprintf('File already exists. Overwrite?\nCancel to change file.'), 'Path warning', 'Overwrite', 'Append file', 'Disable log', 'Disable log');
+    switch buttonName
+        case 'Append file'
+            status = 2;
+            
+        case 'Overwrite'
+            status = 1;
+            
+        case 'Disable log'
+            set(handles.logCheck, 'Value', 0);
+            status = 1;
+            
+        otherwise
+            set(handles.logCheck, 'Value', 0);
+            status = 0;
+    end
+    
+else
+    %file does not exist, will be created when logging begins
+    status = 1;
+end
+
+
+function setCalibration(mainFigure)
+    %This function sets the power calibration coefficients based on the set temperature
+    %mainFigure = main figure handle
+    %output = [a3, a2, a1, a0]
+
+handles = guidata(mainFigure);
+
+temp = handles.diodeCalTemp;
+
+cal_temp = [20,25,30,35];
+%diode monitor voltage to power coeffs (calibrated)
+%a3,a2,a1,a0
+voltage_cal_coef = [...
+    [0.09364815449 -1.303392134 22.00926798 2.175942706];...
+    [0.3715309952 -3.340790084 24.86181978 0.7029328495];...
+    [0.487521366 -3.639501926 23.90466826 0.262408398];...
+    [0.3162068009 -2.021543564 20.24440997 1.148156743]];
+
+%current to power coeffs (calibrated)
+current_cal_coef = [...
+    [4.612008094 -9.575995553];...
+    [4.478570276 -9.753289314];...
+    [4.416482464 -10.57545691];...
+    [4.396149062 -11.30721815]];
+
+%power supply monitor voltage to current (calibrated)
+psc_cal_coef = handles.pscCalCoef;
+
+output_voltage_coef = interp1(cal_temp,voltage_cal_coef,temp, 'linear', 'extrap');
+current_coef = interp1(cal_temp,current_cal_coef,temp, 'linear', 'extrap');
+%calculate coeff for direct psmv2power (don't calc curent explicitly)
+output_current_coef = [current_coef(1)*psc_cal_coef(1), current_coef(2)+current_coef(1)*psc_cal_coef(2)];
+handles.pwrCalCoef = output_voltage_coef;
+handles.pwrEstCoef = output_current_coef;
+
+guidata(mainFigure,handles);
+
+
+% REPLACE_WITH_DASH_DASH- End user functions
+
+
+% REPLACE_WITH_DASH_DASH- Executes just before regen_monitor is made visible.
+function regen_monitor_OpeningFcn(hObject, eventdata, handles, varargin)
+% This function has no output args, see OutputFcn.
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% varargin   command line arguments to regen_monitor (see VARARGIN)
+
+% Choose default command line output for regen_monitor
+handles.output = hObject;
+
+% Update handles structure, set 'global' parameters
+handles.pwrCalCoef = [0.4315403228 28.14068064 -3.770681968 0.4096289863];   %power cal coeffs, calc power from monitor voltage, an an-1...
+handles.pwrEstCoef = [30.76897313 -11.93860021];    %power estimate coeffs, calc power from current mon voltage, a1 a0
+handles.pscCalCoef = [5.977168596 0.009309869398];  %curent power supply cal coeffs, a1 a0	
+handles.diodeCalTemp = 35;                %temperature for diode calibration
+
+handles.crvWrn = 0.8;               %crv Warning level
+handles.crvDng = 1;                 %crv Danger level
+handles.tmp1Cal = 0.00499;          %temp1 calibration, V/degC
+handles.tmp1Ofs = 1.2370;           %temp1 offset, V
+handles.tmp2Cal = 0.004905;         %temp2 calibration, V/degC
+handles.tmp2Ofs = 1.2335;           %temp2 offset, V
+handles.tmpWrn1 = [25,40];           %temp warning, degC, diode
+handles.tmpDng1 = [20,45];           %temp danger, degC, diode
+handles.tmpWrn2 = [10,20];           %temp warning, degC, xstal
+handles.tmpDng2 = [05,25];           %temp danger, degC, xstal
+
+handles.avgN = 1000;                %number of scans to average per update
+handles.refreshRate = 5;            %refresh rate, times per second
+handles.logNum = 0;
+handles.dngCol = [.75 0 0];         %'danger' color (red)
+handles.wrnCol = [.75 .5 0];       %'warning' color (yellow)
+handles.safeCol = [.25 .5 0];        %'safe' color (green)
+
+maxSampleRate = 9600;
+handles.sampleRate = handles.avgN*handles.refreshRate;
+
+if handles.sampleRate >= maxSampleRate
+    handles.sampleRate = maxSampleRate;
+    handles.refreshRate = handles.sampleRate/handles.avgN;
+end
+
+%set(findall(handles.cryPanel, '-property', 'enable'), 'enable', 'off')
+
+guidata(hObject, handles);
+setCalibration(handles.figure1);
+
+% UIWAIT makes regen_monitor wait for user response (see UIRESUME)
+% uiwait(handles.figure1);
+
+
+% REPLACE_WITH_DASH_DASH- Outputs from this function are returned to the command line.
+function varargout = regen_monitor_OutputFcn(hObject, eventdata, handles) 
+% varargout  cell array for returning output args (see VARARGOUT);
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get default command line output from handles structure
+varargout{1} = handles.output;
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function tmp1Unit_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to tmp1Unit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+%sets display  to deg Celcius
+set(hObject, 'String', [char(176),'C'])
+
+
+% REPLACE_WITH_DASH_DASH- Executes on button press in scanBtn.
+function scanBtn_Callback(hObject, eventdata, handles)
+% hObject    handle to scanBtn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+%scan for devices
+[e,msg] = scanDev(hObject, handles);
+
+switch e
+    case -1
+        %error occured
+        errordlg(msg, 'Connection Error');
+    case 0
+        %no deivces
+        msgbox(msg,'Connection Error', 'warn');
+    case 1
+        %all good
+    otherwise
+        %error
+        errordlg(['Unknown error occured: ' msg], 'Connection Error');
+end
+
+
+% REPLACE_WITH_DASH_DASH- Executes on button press in monToggle.
+function monToggle_Callback(hObject, eventdata, handles)
+% hObject    handle to monToggle (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+button_state = get(hObject,'Value');
+
+if button_state == get(hObject, 'Max')
+    %button presed
+%     try
+        startMon(handles.figure1);
+%     catch err
+%         errordlg(['Error starting monitors: ' err.identifier], 'Monitor Error');
+%         
+%     end
+    
+    
+elseif button_state == get(hObject, 'Min')
+    %not pressed
+    try
+        stopMon(handles.figure1);
+    catch err
+        errordlg(['Error stoping monitors: ' err.identifier], 'Monitor Error');
+    end
+end
+
+
+% REPLACE_WITH_DASH_DASH- Executes on button press in logCheck.
+function logCheck_Callback(hObject, eventdata, handles)
+% hObject    handle to logCheck (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of logCheck
+if get(hObject, 'Value') == 1
+    %separate filename and path
+    [path,name,ext] = fileparts(get(handles.logFilename, 'String'));
+    
+    %check for valid path
+    while exist(path, 'dir') ~= 7
+        %open system dialog to select file/location
+        [fileName, pathName] = uiputfile( '*.txt', 'Invalid save location', 'D:\Miller Group Users');
+
+        %if the user presses 'cancel', uncheck log box
+        if pathName == 0
+            set(handles.logCheck, 'Value', 0);
+            break;
+        end
+
+        %set file location string
+        set(handles.logFilename,'String',[pathName,fileName]);
+        [path,name,ext] = fileparts(get(handles.logFilename, 'String'));
+    end
+
+%     %check for existing file
+%     changeFile = true;
+%     while changeFile
+% 
+%         if exist(fullfile(path,[name ext]),'file') == 2
+% 
+%             %file already exists, promt for overwrite
+%             buttonName = questdlg('File already exists. Overwrite?', 'Path warning', 'Cancel', 'Change file', 'Overwrite', 'Cancel');
+%             switch buttonName
+%                 case 'Cancel'
+%                     set(handles.logCheck, 'Value', 0);
+%                     return
+%                     
+%                 case 'Change file'
+%                     %open system dialog to select new file
+%                     [fileName, path] = uiputfile( '*.txt', 'Invalid save location', 'D:\Miller Group Users');
+%                     set(handles.logFilename,'String',[path,fileName]);
+%                     [path,name,ext] = fileparts(get(handles.logFilename, 'String'));
+%                     
+%                 case 'Overwrite'
+%                     changeFile = false;
+%                     
+%                 otherwise
+%                     set(handles.logCheck, 'Value', 0);
+%                     return
+%             end
+%             
+%         else
+%             %file does not exist, will be created when logging begins
+%             changeFile = false;
+%         end
+%         
+%     end
+    
+end
+
+function logFilename_Callback(hObject, eventdata, handles)
+% hObject    handle to logFilename (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of logFilename as text
+%        str2double(get(hObject,'String')) returns contents of logFilename as a double
+
+%run log checkbox callback to determine if filename is ok
+logCheck_Callback(handles.logCheck, eventdata, handles);
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function logFilename_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to logFilename (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% REPLACE_WITH_DASH_DASH- Executes on button press in browseFileButton.
+function browseFileButton_Callback(hObject, eventdata, handles)
+% hObject    handle to browseFileButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+%opens system dialog to selecct file
+[fileName, pathName] = uiputfile( '*.txt', 'Save file', 'D:\Miller Group Users');
+set(handles.logFilename,'String',[pathName,fileName]);
+
+%run log checkbox callback to determine if filename is ok
+logCheck_Callback(handles.logCheck, eventdata, handles);
+
+
+
+function calTempEdit_Callback(hObject, eventdata, handles)
+% hObject    handle to calTempEdit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of calTempEdit as text
+%        str2double(get(hObject,'String')) returns contents of calTempEdit as a double
+
+temp = str2double(get(hObject,'String'));
+
+if isnan(temp)
+    set(hObject, 'String', num2str(handles.diodeCalTemp));
+else
+    handles.diodeCalTemp = temp;
+end
+
+guidata(handles.figure1,handles);
+setCalibration(handles.figure1);
+
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function calTempEdit_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to calTempEdit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% REPLACE_WITH_DASH_DASH- Executes when selected object is changed in calibrationPanel.
+function calibrationPanel_SelectionChangeFcn(hObject, eventdata, handles)
+% hObject    handle to the selected object in calibrationPanel 
+% eventdata  structure with the following fields (see UIBUTTONGROUP)
+%	EventName: string 'SelectionChanged' (read only)
+%	OldValue: handle of the previously selected object or empty if none was selected
+%	NewValue: handle of the currently selected object
+% handles    structure with handles and user data (see GUIDATA)
+
+%get(handles.calibrationPanel, 'Value')
+
+##### SOURCE END #####
+--></body></html>

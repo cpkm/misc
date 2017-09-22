@@ -60,6 +60,7 @@ guidata(handles.figure1,handles);
 
 try
 device = daq.getDevices;
+
 catch err
     errordlg(['Error retrieving device list: ' err.identifier]);
     e = -1;
