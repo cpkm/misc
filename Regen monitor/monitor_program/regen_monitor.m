@@ -60,7 +60,6 @@ guidata(handles.figure1,handles);
 
 try
 device = daq.getDevices;
-
 catch err
     errordlg(['Error retrieving device list: ' err.identifier]);
     e = -1;
@@ -250,7 +249,7 @@ set(handles.t2vDisp, 'String', num2str(tmp2Vlt,'%.4f'));
 cal2use = get(get(handles.calibrationPanel, 'SelectedObject'),'String');
 
 %Power display
-if pwrVlt <= 0.01
+if pwrVlt <= handles.pwrThdVolt
    curPow = 0; 
 elseif strcmpi(cal2use, 'Voltage')
     curPow = polyval(handles.pwrCalCoef,pwrVlt);
@@ -266,7 +265,7 @@ powStr = num2str(curPow,'%.1f');
 set(handles.pwrDisp, 'String', powStr);
 
 %Current, power supply display
-if pscVlt <0.002
+if pscVlt <0.003
     curPsc = 0;
 else
     curPsc = polyval(handles.pscCalCoef, pscVlt);
@@ -433,6 +432,9 @@ output_voltage_coef = interp1(cal_temp,voltage_cal_coef,temp, 'linear', 'extrap'
 current_coef = interp1(cal_temp,current_cal_coef,temp, 'linear', 'extrap');
 %calculate coeff for direct psmv2power (don't calc curent explicitly)
 output_current_coef = [current_coef(1)*psc_cal_coef(1), current_coef(2)+current_coef(1)*psc_cal_coef(2)];
+psc_thd_volt = -output_current_coef(2)/output_current_coef(1);
+
+handles.pwrThdVolt = psc_thd_volt;
 handles.pwrCalCoef = output_voltage_coef;
 handles.pwrEstCoef = output_current_coef;
 
@@ -458,6 +460,8 @@ handles.pwrCalCoef = [0.4315403228 28.14068064 -3.770681968 0.4096289863];   %po
 handles.pwrEstCoef = [30.76897313 -11.93860021];    %power estimate coeffs, calc power from current mon voltage, a1 a0
 handles.pscCalCoef = [5.977168596 0.009309869398];  %curent power supply cal coeffs, a1 a0	
 handles.diodeCalTemp = 35;                %temperature for diode calibration
+handles.pwrThdVolt = 0;                 %default monitor threshold voltage
+set(handles.calTempEdit, 'String', num2str(handles.diodeCalTemp));
 
 handles.crvWrn = 0.8;               %crv Warning level
 handles.crvDng = 1;                 %crv Danger level
