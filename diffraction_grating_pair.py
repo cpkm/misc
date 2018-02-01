@@ -119,21 +119,10 @@ def symDisp(L, N, AOI, lambda0):
         
     return phi
 
-'''
-aoi = 13.89
-n=600
-lam=800E-9
-l0=0.01
-
-d0 = dispCoef(l0,n,aoi,lam)
-d1 = symDisp(l0,n,aoi,lam)
-
-print(d0,'\n',d1, '\n', beta2(n,aoi,lam))
-
 
 aoi = np.linspace(35,90,50)
 l0 = 1030E-9
-dl = 10E-9
+dl = 40E-9
 gdd = 37E-24
 
 n = 1200
@@ -191,4 +180,3 @@ x_allowed = lr*np.sin(alpha*np.pi/180)/2
 plt.figure(3)
 plt.plot(aoi,x_allowed)
 
-'''
