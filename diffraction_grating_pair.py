@@ -180,3 +180,5 @@ x_allowed = lr*np.sin(alpha*np.pi/180)/2
 plt.figure(3)
 plt.plot(aoi,x_allowed)
 
+plt.show()
+
